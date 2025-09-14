@@ -10,13 +10,11 @@ body {
     font-family: 'Bebas Neue Cyrillic', sans-serif;
     background-image: url('backimage.jpg');
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .header_site {
     background-color: #034742;
-    padding: 5px;
+    padding: 12px;
 }
 
 .container_header {
@@ -40,4 +38,49 @@ body {
     gap: 20px;
     color: white;
     font-size: 22px;
+}
+
+#main_form {
+    margin: 40px 40px;
+    padding: 20px;
+    color: antiquewhite;
+    font-size: 25px;
+    line-height: 35px;
+}
+
+#text_y, #select_x {
+    margin-left: 20px;
+    font-size: 20px;
+    border: 2px solid antiquewhite;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 100px;
+    font-family: 'Bebas Neue Cyrillic', sans-serif;
+    color: #034742;
+}
+
+.button_r {
+    margin-left: 20px;
+    font-size: 20px;
+    border: 2px solid antiquewhite;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 70px;
+    font-family: 'Bebas Neue Cyrillic', sans-serif;
+    color: #034742;
+    transition: all 0.3s ease;
+}
+
+.button_r:hover {
+    background-color: #f1f8f1; /* Светло-зеленый фон */
+    transform: translateY(-2px); /* Легкое поднятие */
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+}
+
+.button_r.selected {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #45a049;
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
 }
