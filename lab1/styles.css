@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 * {
-    margin: 0;
+    margin: 0; /* сброс отступов браузера */
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* nеперь width и height включают в себя padding и border, но не margin */
 }
 
 body {
@@ -14,40 +14,30 @@ body {
     background-repeat: no-repeat;
 }
 
-body, input, button, table, th, td {
-    font-family: 'Bebas Neue Cyrillic', sans-serif;
-    color: antiquewhite;
-}
-
 .header_site {
     background-color: #034742;
-    padding: 15px 0;
+    padding: 5px;
 }
 
-.container {
+.container_header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
 }
 
-.container img {
+.container_header img {
     height: 40px;
     width: auto;
 }
 
-.initials_nav,
-.other_nav {
+.initials ul,
+.group_isu ul {
     list-style: none;
     display: flex;
-    gap: 10px;
-}
-
-.initials_nav ul,
-.other_nav ul {
+    gap: 20px;
     color: white;
     font-size: 22px;
 }
