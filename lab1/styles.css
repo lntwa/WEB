@@ -72,8 +72,8 @@ body {
 }
 
 .button_r:hover {
-    background-color: #f1f8f1; /* Светло-зеленый фон */
-    transform: translateY(-2px); /* Легкое поднятие */
+    background-color: #f1f8f1; 
+    transform: translateY(-2px); 
     box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
 }
 
@@ -83,4 +83,14 @@ body {
     border-color: #45a049;
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.form_button {
+    margin-left: 20px;
+    font-size: 25px;
+    border: 2px solid antiquewhite;
+    border-radius: 5px;
+    font-family: 'Bebas Neue Cyrillic', sans-serif;
+    color: #034742;
+    margin-top: 20px;
 }

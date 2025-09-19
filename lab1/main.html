@@ -3,7 +3,103 @@
     <head>
         <meta charset="utf-8" />
         <title>Лабораторная работа №1</title>
-        <link rel="stylesheet" href="styles.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+            * {
+                margin: 0; /* сброс отступов браузера */
+                padding: 0;
+                box-sizing: border-box; /* nеперь width и height включают в себя padding и border, но не margin */
+            }
+
+            body {
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                background-image: url('backimage.jpg');
+                background-size: cover;
+            }
+
+            .header_site {
+                background-color: #034742;
+                padding: 12px;
+            }
+
+            .container_header {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .container_header img {
+                height: 40px;
+                width: auto;
+            }
+
+            .initials ul,
+            .group_isu ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+                color: white;
+                font-size: 22px;
+            }
+
+            #main_form {
+                margin: 40px 40px;
+                padding: 20px;
+                color: antiquewhite;
+                font-size: 25px;
+                line-height: 35px;
+            }
+
+            #text_y, #select_x {
+                margin-left: 20px;
+                font-size: 20px;
+                border: 2px solid antiquewhite;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 100px;
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                color: #034742;
+            }
+
+            .button_r {
+                margin-left: 20px;
+                font-size: 20px;
+                border: 2px solid antiquewhite;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 70px;
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                color: #034742;
+                transition: all 0.3s ease;
+            }
+
+            .button_r:hover {
+                background-color: #f1f8f1; 
+                transform: translateY(-2px); 
+                box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+            }
+
+            .button_r.selected {
+                background-color: #4CAF50;
+                color: white;
+                border-color: #45a049;
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+            }
+
+            .form_button {
+                margin-left: 20px;
+                font-size: 25px;
+                border: 2px solid antiquewhite;
+                border-radius: 5px;
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                color: #034742;
+                margin-top: 20px;
+            }
+        </style>
     </head>
     <body>
         <header class="header_site">
@@ -61,9 +157,9 @@
                 </div>
 
                 <div id="button_container">
-                    <button id="submit_button" type="button">Подтвердить</button>
-                    <button id="clear_form_button" type="button">Очистить форму</button>
-                    <button id="clear_table_button" type="button">Очистить таблицу</button>
+                    <button class="form_button" type="button">Подтвердить</button>
+                    <button class="form_button" type="button">Очистить форму</button>
+                    <button class="form_button" type="button">Очистить таблицу</button>
                 </div>
 
                 <div id="error" hidden></div>
