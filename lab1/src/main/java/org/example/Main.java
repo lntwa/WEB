@@ -24,10 +24,9 @@ public class Main {
             if (method.equals("POST")) {
                 long startTime = System.nanoTime();
 
-                // ✅ Читаем тело POST-запроса
                 String body;
                 try {
-                    body = new String(FCGIInterface.request.inStream.readAllBytes(), StandardCharsets.UTF_8);
+                    body = new String(FCGIInterface.request.inStream.readAllBytes(), StandardCharsets.UTF_8); //разобрать подробно
                 } catch (Exception e) {
                     System.out.println(error("Failed to read POST body"));
                     continue;
@@ -38,7 +37,7 @@ public class Main {
                     continue;
                 }
 
-                LinkedHashMap<String, String> params;
+                LinkedHashMap<String, String> params; // почему такая коллекция
                 try {
                     params = parse(body);
                 } catch (Exception e) {
