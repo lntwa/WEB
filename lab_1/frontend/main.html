@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>Лабораторная работа №1</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+            * {
+                margin: 0; /* сброс отступов браузера */
+                padding: 0;
+                box-sizing: border-box; /* nеперь width и height включают в себя padding и border, но не margin */
+            }
+
+            body {
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                background-image: url('backimage.jpg');
+                background-size: cover;
+            }
+
+            .header_site {
+                background-color: #034742;
+                padding: 12px;
+            }
+
+            .container_header {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .container_header img {
+                height: 40px;
+                width: auto;
+            }
+
+            .initials ul,
+            .group_isu ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+                color: white;
+                font-size: 22px;
+            }
+
+            #main_form {
+                margin: 40px 40px;
+                padding: 20px;
+                color: antiquewhite;
+                font-size: 25px;
+                line-height: 35px;
+            }
+
+            #text_y, #select_x {
+                margin-left: 20px;
+                font-size: 20px;
+                border: 2px solid antiquewhite;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 100px;
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                color: #034742;
+            }
+
+            .button_r {
+                margin-left: 20px;
+                font-size: 20px;
+                border: 2px solid antiquewhite;
+                border-radius: 5px;
+                width: 100%;
+                max-width: 70px;
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                color: #034742;
+                transition: all 0.3s ease;
+            }
+
+            .button_r:hover {
+                background-color: #f1f8f1; 
+                transform: translateY(-2px); 
+                box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+            }
+
+            .button_r.selected {
+                background-color: #4CAF50;
+                color: white;
+                border-color: #45a049;
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+            }
+
+            .form_button {
+                margin-left: 20px;
+                font-size: 25px;
+                border: 2px solid antiquewhite;
+                border-radius: 5px;
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                color: #034742;
+                margin-top: 20px;
+            }
+
+            #result_table {
+                background-color: white;
+                margin: 20px;
+                font-size: 25px;
+                border: 2px solid antiquewhite;
+                border-radius: 5px;
+                font-family: 'Bebas Neue Cyrillic', sans-serif;
+                color: #034742;
+                width: 95%;
+            }
+
+            #result_table th{
+                border: 2px solid bisque;
+            }
+
+            #main_canvas {
+                width: 34%;
+                margin-bottom: 60px;
+                display: flex;
+                justify-content: right;
+                align-items: flex-start;
+            }
+            #error {
+                color: rgb(24, 100, 200);
+                background: white;
+                border: 1px solid rgb(25, 153, 204);
+                width: 40%;
+                margin-top: 10px;
+
+            }
+        </style>
+    </head>
+    <body>
+        <header class="header_site">
+            <div class="container_header">
+                <a href="https://se.ifmo.ru/courses/web">
+                    <img src="logo_itmo.png" alt="ITMO">
+                </a>
+                <div class="initials">
+                    <ul>
+                        <li>Леонтьева</li>
+                        <li>Арина</li>
+                        <li>Николаевна</li>
+                    </ul>
+                </div>
+                <div class="group_isu">
+                    <ul>
+                        <li>P3213</li>
+                        <li>472157</li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <div id="form_canvas_container">
+            <form id="main_form">
+
+                <div id="choice_of_x">
+                    <label for="select_x" class="label_name">Выберите координату Х:</label>
+                    <select name="x" id="select_x" required>
+                        <option value="-4">-4</option>
+                        <option value="-3">-3</option>
+                        <option value="-2">-2</option>
+                        <option value="-1">-1</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+
+                <div id="choice_of_y">
+                    <label for="text_y" class="label_name">Выберите координату Y: </label>
+                    <input type="text" name="y" id="text_y" placeholder="От -5 до 5" required>
+                </div>
+
+                <div id="choice_of_r">
+                    <div class="label_name">Выберите R:</div>
+                    <button type="button" class="button_r" value="1">1</button>
+                    <button type="button" class="button_r" value="1.5">1.5</button>
+                    <button type="button" class="button_r" value="2">2</button>
+                    <button type="button" class="button_r" value="2.5">2.5</button>
+                    <button type="button" class="button_r" value="3">3</button>
+                    <input type="hidden" id="value_r" name="r" required>
+                </div>
+
+                <div id="button_container">
+                    <button class="form_button" type="button">Подтвердить</button>
+                    <button class="form_button" type="button">Очистить форму</button>
+                    <button class="form_button" type="button">Очистить таблицу</button>
+                </div>
+
+                <div id="error" hidden></div>
+
+            </form>
+
+            <div id="main_canvas">
+                <canvas id="coordinate_plane" width="400" height="400"></canvas>
+            </div>
+
+            <div id="table_container">
+                <table id="result_table">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                        <th>R</th>
+                        <th>Попали ли вы:</th>
+                        <th>Текущее время:</th>
+                        <th>Время выполнения скрипта:</th>
+                    </tr>
+                    </thead>
+                    <tbody id="body_for_table"></tbody>
+                </table>
+            </div>
+
+        </div>
+    </body>
+    <script type="module" src="mainscript.js"></script>
+</html>
