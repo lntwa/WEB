@@ -3,8 +3,8 @@ import { initCanvas, drawPoint } from "./canvas.js";
 const mainForm = document.getElementById("main_form");
 const xInput = document.getElementById("select_x");
 const yInput = document.getElementById("text_y");
-const rButtons = document.querySelectorAll(".button_r"); // Исправлено
-const clearButtons = document.querySelectorAll(".form_button"); // Исправлено
+const rButtons = document.querySelectorAll(".button_r");
+const clearButton = document.getElementById("clear");
 const error = document.getElementById("error");
 const hiddenRInput = document.getElementById("value_r");
 
@@ -12,28 +12,21 @@ let currentR = 2;
 
 window.onload = function () {
     redraw(currentR);
-    // Устанавливаем начальное значение R
     hiddenRInput.value = currentR;
 };
 
-// Исправленная функция для выбора R
 function selectR(event) {
-    // Снимаем выделение со всех кнопок
     rButtons.forEach(button => {
         button.classList.remove('selected');
-    });
-    
-    // Выделяем нажатую кнопку
-    event.target.classList.add('selected');
-    
-    // Устанавливаем значение R
-    currentR = parseFloat(event.target.value);
-    hiddenRInput.value = currentR;
-    
-    redraw(currentR);
+    }); // очищаем предыдущую визуальную подсветку
+    event.target.classList.add('selected'); // подсвечиваем кнопку, на которую тыкнули
+    currentR = parseFloat(event.target.value); // парсим значение с кнопки в текущий радиус
+    hiddenRInput.value = currentR; //записываем
+
+    redraw(currentR); // перерисовываем
 }
 
-// Назначаем обработчики для кнопок R
+// присваиваем каждой кнопке поведение при клике, вызываем selectR, чтобы обработать выбор значения радиуса
 rButtons.forEach(button => {
     button.addEventListener('click', selectR);
 });
@@ -51,14 +44,13 @@ const validateX = function () {
 
 const validateY = function () {
     let selectedY = yInput.value.trim();
-    selectedY = checkNumber(selectedY);
+    selectedY = checkNumber(selectedY); // меняем все запятые на точки, оставляем только одну точку, удаляем недопустимые символы, корректируем минус
     if (selectedY === '') {
         showMessage(error, "Выберите координату Y!");
         return false;
     }
     if (selectedY.includes('.')) {
-        
-        const decimalPart = selectedY.split('.')[1];
+        const decimalPart = selectedY.split('.')[1]; // проверяем длину дробной части
 
         if (decimalPart && decimalPart.length > 6) {
             showMessage(error, "Слишком много знаков после запятой! Макс. 6");
@@ -89,7 +81,7 @@ const validateR = function () {
     }
 };
 
-function redraw(R = currentR) {
+function redraw(R = currentR) { //под вопросом, если оставляю так, то html страницу уже не передать
     initCanvas(R);
     let history = JSON.parse(localStorage.getItem('results') || '[]');
     history.forEach(result => {
@@ -97,7 +89,7 @@ function redraw(R = currentR) {
     });
 }
 
-function clear() {
+function clear() { // сейм здесь
     localStorage.removeItem('results');
     const tbody = document.getElementById('body_for_table');
     tbody.innerHTML = '';
@@ -105,35 +97,20 @@ function clear() {
     redraw(currentR);
 }
 
-// Назначаем обработчики для кнопок очистки
-clearButtons.forEach((button, index) => {
-    if (index === 1) { // Кнопка "Очистить форму"
-        button.addEventListener('click', clear);
-    } else if (index === 2) { // Кнопка "Очистить таблицу"
-        button.addEventListener('click', function() {
-            localStorage.removeItem('results');
-            const tbody = document.getElementById('body_for_table');
-            tbody.innerHTML = '';
-            redraw(currentR);
-        });
-    }
-});
-
-// Обработчик для кнопки "Подтвердить"
-document.querySelector('.form_button').addEventListener('click', function(event) {
-    event.preventDefault();
-    handleSubmit(event);
-});
+clearButton.addEventListener('click', clear)
 
 async function handleSubmit(event) {
     const x = xInput.value;
     const y = checkNumber(yInput.value);
     const r = hiddenRInput.value;
 
+    console.log('handleSubmit: x=', x, 'y=', y, 'r=', r, 'hiddenRElement=', hiddenRInput)
     if (!validateX() || !validateY() || !validateR()) return;
 
     await sendRequest(x, y, r);
 }
+
+mainForm.addEventListener('submit', handleSubmit);
 
 function addRow(data) {
     const { x, y, r, hit, time, scriptTime } = data;
@@ -185,38 +162,33 @@ function checkNumber(value) {
 
 async function sendRequest(x, y, r) {
     try {
-        // формируем тело POST-запроса в формате form-urlencoded
         const body = new URLSearchParams({ x, y, r });
+        if (body == null) {
+            return;
+        }
 
-        const response = await fetch('/fcgi-bin/server.jar', {
+        const response = await fetch('fcgi-bin/server-all.jar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: body.toString()
+            body: body
         });
-
         if (!response.ok) {
-            throw Error(response.statusText);
+            throw new Error(`HTTP error, status ${response.status}`);
         }
-
         const result = await response.json();
-
         if (result.error) {
             showMessage(error, result.error);
             return;
         }
-
-        // сохраняем в localStorage историю результатов
         let history = JSON.parse(localStorage.getItem('results') || '[]');
         history.push(result);
         localStorage.setItem('results', JSON.stringify(history));
-
-        // визуальное обновление
         addRow(result);
         drawPoint(parseFloat(result.x), parseFloat(result.y), result.hit);
-    } catch (err) {
-        console.error(err);
-        showMessage(error, "Server error!");
+    } catch (e) {
+        console.error(e)
+        showMessage(error, "Send request error")
     }
 }
