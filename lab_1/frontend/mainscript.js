@@ -46,7 +46,7 @@ button.addEventListener('click', () => {
         }
         return response.text();
     }).then(htmlRow => {
-        const tbody = document.getElementById('body_for_table');
+        const tbody = document.getElementById('#result_table tbody');
         tbody.insertAdjacentHTML('beforeend', htmlRow);
         drawPoint(parseFloat(x), parseFloat(y), true);
         return htmlRow;
