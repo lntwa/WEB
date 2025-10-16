@@ -26,7 +26,7 @@ public class Main {
             String method = FCGIInterface.request.params.getProperty("REQUEST_METHOD");
 
             if (method == null) {
-                System.out.print(errorResult("Unsupported HTTP method: null"));
+                System.out.println(errorResult("Unsupported HTTP method: null"));
                 continue;
             }
 
@@ -34,18 +34,18 @@ public class Main {
                 logger.info("POST request processing.");
                 String contentType = FCGIInterface.request.params.getProperty("CONTENT_TYPE");
                 if (contentType == null) {
-                    System.out.print(errorResult("Content-Type is null"));
+                    System.out.println(errorResult("Content-Type is null"));
                     continue;
                 }
                 if (!contentType.equals("application/x-www-form-urlencoded")) {
-                    System.out.print(errorResult("Content-Type is not supported"));
+                    System.out.println(errorResult("Content-Type is not supported"));
                     continue;
                 }
 
                 Properties requestBody = formParser(readRequestBody());
 
                 if (requestBody == null) {
-                    System.out.print(errorResult("Bad request."));
+                    System.out.println(errorResult("Bad request."));
                     continue;
                 }
 
@@ -54,7 +54,7 @@ public class Main {
                 var yStr = requestBody.get("Y");
 
                 if (rStr == null || xStr == null || yStr == null) {
-                    System.out.print(errorResult("R, X and Y must be provided as x-www-form-urlencoded params."));
+                    System.out.println(errorResult("R, X and Y must be provided as x-www-form-urlencoded params."));
                     continue;
                 }
 
@@ -62,31 +62,31 @@ public class Main {
                 try {
                     r = new BigDecimal(rStr.toString());
                     if (r.compareTo(new BigDecimal("1.0")) < 0 || r.compareTo(new BigDecimal("3.0")) > 0) {
-                        System.out.print(errorResult("R must be in [1, 3]"));
+                        System.out.println(errorResult("R must be in [1, 3]"));
                         continue;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.print(errorResult("R must be a double"));
+                    System.out.println(errorResult("R must be a double"));
                     continue;
                 }
                 try {
                     x = new BigDecimal(xStr.toString());
                     if (x.compareTo(new BigDecimal("-4.0")) < 0 || x.compareTo(new BigDecimal("4.0")) > 0) {
-                        System.out.print(errorResult("X must be in [-4, 4]"));
+                        System.out.println(errorResult("X must be in [-4, 4]"));
                         continue;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.print(errorResult("X must be a double"));
+                    System.out.println(errorResult("X must be a double"));
                     continue;
                 }
                 try {
                     y = new BigDecimal(yStr.toString());
                     if (y.compareTo(new BigDecimal("-5.0")) < 0 || y.compareTo(new BigDecimal("5.0")) > 0) {
-                        System.out.print(errorResult("Y must be in [-5, 5]"));
+                        System.out.println(errorResult("Y must be in [-5, 5]"));
                         continue;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.print(errorResult("Y must be a double"));
+                    System.out.println(errorResult("Y must be a double"));
                     continue;
                 }
 
@@ -97,7 +97,7 @@ public class Main {
                 result(r, x, y, status(r, x, y), (System.nanoTime() - start) / 1_000);
                 continue;
             }
-            System.out.print(errorResult("Unsupported HTTP method: " + method));
+            System.out.println(errorResult("Unsupported HTTP method: " + method));
 
         }
     }
