@@ -2,8 +2,6 @@ import { initCanvas, drawPoint } from './canvas.js';
 
 const buttons = document.querySelectorAll('button[name="r"]');
 const button = document.querySelector('.submit');
-const mainForm = document.getElementById('main_form')
-const clearButton = document.getElementById("clear")
 
 let currentR = 2;
 
@@ -46,9 +44,9 @@ button.addEventListener('click', () => {
         }
         return response.text();
     }).then(htmlRow => {
-        const tbody = document.getElementById('#result_table tbody');
+        const tbody = document.querySelector('#result_table tbody');
         tbody.insertAdjacentHTML('beforeend', htmlRow);
-        drawPoint(parseFloat(x), parseFloat(y), true);
+        drawPoint(parseInt(x), parseFloat(y), true);
         return htmlRow;
     }).catch(error => {
         console.error('Fetch failed: ', {
@@ -143,7 +141,7 @@ function checkForm() {
 }
 
 function clear() {
-    const tbody = document.getElementById('body_table');
+    const tbody = document.getElementById('result_table');
     if (tbody) tbody.innerHTML = '';
 
     const mainForm = document.getElementById('main_form');

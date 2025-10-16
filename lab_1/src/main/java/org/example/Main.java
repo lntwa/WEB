@@ -1,12 +1,9 @@
 package org.example;
 
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Properties;
 import java.nio.ByteBuffer;
-
 import com.fastcgi.FCGIInterface;
-
 import java.io.IOException;
 import java.util.logging.Logger;
 import java.nio.charset.StandardCharsets;
@@ -95,10 +92,8 @@ public class Main {
                     <td>%s</td>
                     <td>%sμs</td>
                 </tr>
-                """.formatted(r, x, y,
-                result ? "Попадание" : "Промах",
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")),
-                nano);
+                """.formatted(r, x, y, result ? "Попадание" : "Промах",
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")), nano);
         logger.info(("Success request! R = %s, X = %s, Y = %s. Result: %s").formatted(r, x, y, result ? "Попадание" : "Промах"));
         System.out.print(echoPage(content));
     }
