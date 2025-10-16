@@ -141,3 +141,18 @@ function checkForm() {
     console.log("Form is completed.");
     return true;
 }
+
+function clear() {
+    const tbody = document.getElementById('body_table');
+    if (tbody) tbody.innerHTML = '';
+
+    const mainForm = document.getElementById('main_form');
+    if (mainForm) mainForm.reset();
+
+    const hiddenR = document.getElementById('hiddenR');
+    if (hiddenR) hiddenR.value = '';
+
+    buttons.forEach(btn => btn.classList.remove('selected'));
+
+    initCanvas(currentR);
+}
