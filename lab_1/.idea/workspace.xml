@@ -5,8 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71e93697-717c-4822-8adb-94e71ac99e8f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../lab1/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/frontend/backimage.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/frontend/backimage2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/frontend/canvas.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/frontend/logo_itmo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/frontend/main.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/frontend/mainscript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/lib/fastcgi-lib.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/src/main/java/org/example/HitCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/src/main/java/org/example/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/src/main/java/org/example/Validation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/src/test/java/org/example/AppTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/httpd.conf" beforeDir="false" afterPath="$PROJECT_DIR$/httpd.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/mainscript.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/mainscript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab_2/src/main/java/org/example/HelloServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../lab_2/src/main/java/org/example/controller/HelloServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab_2/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../lab_2/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +119,9 @@
     &quot;Gradle.lab_1 [shadowJar].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Рабочий стол/itmo/Web/lab_1&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -227,7 +250,16 @@
       <workItem from="1760470951429" duration="18322000" />
       <workItem from="1760560879539" duration="2191000" />
       <workItem from="1760594810550" duration="24121000" />
-      <workItem from="1760625966678" duration="15065000" />
+      <workItem from="1760625966678" duration="16076000" />
+      <workItem from="1760704963521" duration="9630000" />
+      <workItem from="1761254012919" duration="1072000" />
+      <workItem from="1762273701282" duration="62000" />
+      <workItem from="1762335611460" duration="93000" />
+      <workItem from="1762338145019" duration="15000" />
+      <workItem from="1762412479755" duration="474000" />
+      <workItem from="1762415611283" duration="2000" />
+      <workItem from="1762415628580" duration="3991000" />
+      <workItem from="1762419748887" duration="48000" />
     </task>
     <servers />
   </component>

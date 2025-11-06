@@ -7,20 +7,14 @@ let currentR = 2;
 
 window.onload = function () {
     initCanvas(currentR);
-
-    const clearButton = document.getElementById("clear");
-    clearButton.addEventListener('click', clear);
 };
 
 buttons.forEach(button => {
     button.addEventListener('click', function () {
         buttons.forEach(btn => btn.classList.remove('selected'));
-
         this.classList.add('selected');
-
         const rValue = parseFloat(this.getAttribute('value'));
         document.getElementById('hiddenR').value = rValue;
-
         currentR = rValue;
         initCanvas(currentR);
     });
@@ -80,7 +74,15 @@ function validateY(e) {
     if (value === "" || value === "-" || value === ".") {
         return;
     }
+    if (value.includes('.')) {
+        const decimalPart = value.split('.')[1];
 
+        if (decimalPart && decimalPart.length > 4) {
+            input.value = value.substring(0, value.indexOf('.') + 5);
+            input.setSelectionRange(selectionStart, selectionStart);
+            return;
+        }
+    }
     if (isNaN(Number(value))) {
         input.value = value.slice(0, selectionStart - 1) + value.slice(selectionStart);
         input.setSelectionRange(selectionStart - 1, selectionStart - 1);
@@ -140,17 +142,18 @@ function checkForm() {
     return true;
 }
 
+const clearButton = document.getElementById("clear");
+clearButton.addEventListener('click', clear);
+
 function clear() {
-    const tbody = document.getElementById('result_table');
-    if (tbody) tbody.innerHTML = '';
+    const tbody = document.getElementById('t_body')
+    tbody.innerHTML = '';
 
     const mainForm = document.getElementById('main_form');
-    if (mainForm) mainForm.reset();
+    mainForm.reset();
 
-    const hiddenR = document.getElementById('hiddenR');
-    if (hiddenR) hiddenR.value = '';
-
+    document.getElementById('hiddenR').value = '';
     buttons.forEach(btn => btn.classList.remove('selected'));
 
-    initCanvas(currentR);
+    initCanvas(currentR)
 }

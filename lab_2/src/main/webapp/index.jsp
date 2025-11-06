@@ -1,3 +1,5 @@
+<%@ page import="org.example.model.HitResult" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -52,7 +54,7 @@
       line-height: 35px;
     }
 
-    #text_y, #select_x {
+    #text_y, #text_x {
       margin-left: 20px;
       font-size: 20px;
       border: 2px solid antiquewhite;
@@ -81,7 +83,7 @@
       box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
     }
 
-    .button_r.selected {
+    .button_r.active {
       background-color: #4CAF50;
       color: white;
       border-color: #45a049;
@@ -89,7 +91,7 @@
       box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
     }
 
-    .submit {
+    #submit {
       margin-left: 20px;
       font-size: 25px;
       border: 2px solid antiquewhite;
@@ -164,48 +166,44 @@
 </header>
 
 <div id="form_canvas_container">
-  <form id="main_form">
-    <div id="choice_of_x">
-      <label for="select_x" class="label_name">Выберите координату Х:</label>
-      <select name="x" id="select_x" required>
-        <option value="-4">-4</option>
-        <option value="-3">-3</option>
-        <option value="-2">-2</option>
-        <option value="-1">-1</option>
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-    </div>
+    <form id="main_form">
+      <div id="choice_of_x">
+        <label for="text_x" class="label_name">Выберите координату Х:</label>
+        <input type="text" name="x" id="text_x" placeholder="От -3 до 3" required>
+      </div>
 
-    <div id="choice_of_y">
-      <label for="text_y" class="label_name">Выберите координату Y: </label>
-      <input type="text" name="y" id="text_y" placeholder="От -5 до 5" required>
-    </div>
+      <div id="choice_of_y">
+        <label for="text_y" class="label_name">Выберите координату Y: </label>
+        <input type="text" name="y" id="text_y" placeholder="От -5 до 5" required>
+      </div>
 
-    <div id="choice_of_r">
-      <div class="label_name">Выберите R:</div>
-      <button type="button" class="button_r" name="r" value="1">1</button>
-      <button type="button" class="button_r" name="r" value="1.5">1.5</button>
-      <button type="button" class="button_r" name="r" value="2">2</button>
-      <button type="button" class="button_r" name="r" value="2.5">2.5</button>
-      <button type="button" class="button_r" name="r" value="3">3</button>
-      <input type="hidden" id="hiddenR" value="0" name="r" required>
-    </div>
+      <div id="choice_of_r">
+        <div class="label_name">Выберите R:</div>
+        <button type="button" class="button_r" name="r" value="1">1</button>
+        <button type="button" class="button_r" name="r" value="1.5">1.5</button>
+        <button type="button" class="button_r" name="r" value="2">2</button>
+        <button type="button" class="button_r" name="r" value="2.5">2.5</button>
+        <button type="button" class="button_r" name="r" value="3">3</button>
+        <input type="hidden" id="hiddenR" value="0" name="r" required>
+      </div>
 
-    <div id="button_container">
-      <button class="submit" type="button">Подтвердить</button>
-      <button id="clear" type="button">Очистить</button>
-    </div>
+      <div id="button_container">
+        <button id="submit" type="button">Подтвердить</button>
+        <button id="clear" type="button">Очистить</button>
+      </div>
 
-    <div id="error" hidden></div>
-  </form>
+      <div id="error" hidden></div>
+    </form>
 
   <div id="main_canvas">
     <canvas id="coordinate_plane" width="400" height="400"></canvas>
   </div>
+
+  <form id="canvas_form" method="get" action="controller" style="display:none;">
+    <input type="hidden" id="canvas_x" name="x">
+    <input type="hidden" id="canvas_y" name="y">
+    <input type="hidden" id="canvas_r" name="r">
+  </form>
 
   <div id="table_container">
     <table id="result_table">
@@ -219,10 +217,35 @@
         <th>Продолжительность обработки</th>
       </tr>
       </thead>
-      <tbody id="t_body"></tbody>
+      <tbody id="t_body">
+      <%
+        List<HitResult> results = (List<HitResult>) application.getAttribute("results");
+
+        if (results != null && !results.isEmpty()) {
+          for (HitResult result : results) {
+      %>
+      <tr>
+        <td><%= result.getX() %></td>
+        <td><%= result.getY() %></td>
+        <td><%= result.getR() %></td>
+        <td><%= result.isHit() ? "Да" : "Нет" %></td>
+        <td><%= result.getCurrentTime() %></td>
+        <td><%= result.getExecutionTime() %></td>
+      </tr>
+      <%
+        }
+      } else {
+      %>
+      <tr>
+        <td colspan="6">Нет данных для отображения.</td>
+      </tr>
+      <%
+        }
+      %>
+      </tbody>
     </table>
   </div>
 </div>
 </body>
-<script type="module" src="mainscript.js"></script>
+<script type="module" src="js/mainscript.js"></script>
 </html>

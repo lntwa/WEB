@@ -25,24 +25,24 @@ function initCanvas(R = currentR) {
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // Прямоугольник — в 3-й четверти (влево и вниз)
+    // Прямоугольник — в 2-й четверти
     ctx.beginPath();
-    ctx.rect(centerX - scale * R/2, centerY, scale * R / 2, scale * R);
+    ctx.rect(centerX - scale * R, centerY - scale * R, scale * R / 2, scale * R);
     ctx.fillStyle = "rgba(26, 163, 149, 0.5)";
     ctx.fill();
 
-    // Сектор круга — в 1-й четверти (вправо и вверх)
+    // Сектор круга — в 4
     ctx.beginPath();
     ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, scale * R / 2, Math.PI * 1.5, 0, false);
+    ctx.arc(centerX, centerY, scale * R / 2, 0, Math.PI / 2, false);
     ctx.closePath();
     ctx.fillStyle = "rgba(26, 163, 149, 0.5)";
     ctx.fill();
 
-    // Треугольник — в 4-й четверти (вправо и вниз)
+    // Треугольник — в 3
     ctx.beginPath();
     ctx.moveTo(centerX, centerY);
-    ctx.lineTo(centerX + scale * R / 2, centerY);
+    ctx.lineTo(centerX - scale * R / 2, centerY);
     ctx.lineTo(centerX, centerY + scale * R / 2);
     ctx.closePath();
     ctx.fillStyle = "rgba(26, 163, 149, 0.5)";
