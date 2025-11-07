@@ -14,7 +14,7 @@
 
     body {
       font-family: 'Times New Roman', Times, serif;
-      background-image: url('backimage.jpg');
+      background-image: url('media/backimage.jpg');
       background-size: cover;
     }
 
@@ -147,7 +147,7 @@
 <header class="header_site">
   <div class="container_header">
     <a href="https://se.ifmo.ru/courses/web">
-      <img src="logo_itmo.png" alt="ITMO">
+      <img src="media/logo_itmo.png" alt="ITMO">
     </a>
     <div class="initials">
       <ul>
@@ -166,7 +166,7 @@
 </header>
 
 <div id="form_canvas_container">
-    <form id="main_form">
+  <form id="main_form" method="get" action="controller">
       <div id="choice_of_x">
         <label for="text_x" class="label_name">Выберите координату Х:</label>
         <input type="text" name="x" id="text_x" placeholder="От -3 до 3" required>
@@ -188,7 +188,7 @@
       </div>
 
       <div id="button_container">
-        <button id="submit" type="button">Подтвердить</button>
+        <button id="submit" type="submit">Подтвердить</button>
         <button id="clear" type="button">Очистить</button>
       </div>
 
@@ -209,36 +209,33 @@
     <table id="result_table">
       <thead>
       <tr>
-        <th>Радиус R</th>
         <th>X</th>
         <th>Y</th>
-        <th>Статус</th>
-        <th>Дата и время</th>
-        <th>Продолжительность обработки</th>
+        <th>R</th>
+        <th>Попадание</th>
+        <th>Дата</th>
+        <th>Время работы (с)</th>
       </tr>
       </thead>
-      <tbody id="t_body">
+      <tbody>
       <%
-        List<HitResult> results = (List<HitResult>) application.getAttribute("results");
-
-        if (results != null && !results.isEmpty()) {
-          for (HitResult result : results) {
+        List<HitResult> dots = (List<HitResult>) application.getAttribute("results");
+        if (dots != null && !dots.isEmpty()) {
+          for (HitResult dot : dots) {
       %>
       <tr>
-        <td><%= result.getX() %></td>
-        <td><%= result.getY() %></td>
-        <td><%= result.getR() %></td>
-        <td><%= result.isHit() ? "Да" : "Нет" %></td>
-        <td><%= result.getCurrentTime() %></td>
-        <td><%= result.getExecutionTime() %></td>
+        <td><%= dot.getX() %></td>
+        <td><%= dot.getY() %></td>
+        <td><%= dot.getR() %></td>
+        <td><%= dot.isHit() ? "Да" : "Нет" %></td>
+        <td><%= dot.getCurrentTime() %></td>
+        <td><%= dot.getExecutionTime() %></td>
       </tr>
       <%
         }
       } else {
       %>
-      <tr>
-        <td colspan="6">Нет данных для отображения.</td>
-      </tr>
+      <p>Нет данных для отображения.</p>
       <%
         }
       %>

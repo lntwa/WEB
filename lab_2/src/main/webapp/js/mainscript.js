@@ -9,6 +9,8 @@ const error = document.getElementById("error");
 const canvas = document.getElementById("coordinate_plane");
 
 let currentR = 2;
+let yInput = document.getElementById("text_y");
+let xInput = document.getElementById("text_x");
 
 window.onload = function () {
     redraw(currentR);
@@ -32,7 +34,7 @@ function redraw(R = currentR) {
         const y = parseFloat(cells[1].textContent);
         const hit = cells[3].textContent === "Да";
         drawPoint(x, y, hit);
-    });
+    })
 }
 
 function validateR() {
@@ -61,62 +63,92 @@ canvas.addEventListener("click", (event) => {
     hiddenY.value = y;
     hiddenR.value = currentR;
 
-    hiddenForm.submit();//отправка по клику
+    hiddenForm.submit();
 })
 
-document.getElementById("submit").addEventListener("click", (event) => {
-    if (!validateXY() || !validateR()) {
-        event.preventDefault();
-        return;
+document.getElementById("main_form").addEventListener("submit", (event) => {
+    // Обновляем hiddenR перед отправкой
+    document.getElementById("hiddenR").value = currentR;
+
+    // Проверяем валидность
+    if (!validateX() || !validateY() || !validateR()) {
+        event.preventDefault(); // Отменяем отправку если ошибка
     }
 });
 
-const Y = document.getElementById('text_y')
-const X = document.getElementById('text_x')
+const validateY = function () {
+    const raw = yInput.value;
+    const yStr = normalizeNumber(raw);
+    yInput.value = yStr;
 
-Y.addEventListener("input", validateXY);
-X.addEventListener("input", validateXY);
+    const y = parseFloat(yStr);
 
-Y.addEventListener('paste', (e) => {
-    e.preventDefault();
-});
-X.addEventListener('paste', (e) => {
-    e.preventDefault();
-})
-
-function validateXY(e) {
-
-    console.log("Начало валидации значений");
-
-    const input = e.target;
-    input.value = input.value.replace(/[^0-9.-]/g, "");
-    const selectionStart = input.selectionStart;
-    let value = input.value;
-
-    if (value === "" || value === "-" || value === ".") {
-        return;
+    if (yStr === '') {
+        showMessage(error, "Введите координату Y!");
+        return false;
     }
-    if (value.includes('.')) {
-        const decimalPart = value.split('.')[1];
+    if (isNaN(y)) {
+        showMessage(error, "Y должен быть числом!");
+        return false;
+    }
+    if (y < -5 || y > 5) {
+        showMessage(error, "Не входит в диапазон от -5 до 5!");
+        return false;
+    }
 
-        if (decimalPart && decimalPart.length > 4) {
-            input.value = value.substring(0, value.indexOf('.') + 5);
-            input.setSelectionRange(selectionStart, selectionStart);
-            return;
-        }
+    const dot = yStr.indexOf('.');
+    if (dot !== -1 && yStr.length - dot - 1 > 6) {
+        showMessage(error, "Слишком много знаков после запятой (макс. 6)");
+        return false;
     }
-    if (isNaN(Number(value))) {
-        input.value = value.slice(0, selectionStart - 1) + value.slice(selectionStart);
-        input.setSelectionRange(selectionStart - 1, selectionStart - 1);
+    showMessage(error, "");
+    return true;
+}
+
+const validateX = function () {
+    const raw = xInput.value;
+    const xStr = normalizeNumber(raw);
+    xInput.value = xStr;
+
+    const x = parseFloat(xStr);
+
+    if (xStr === '') {
+        showMessage(error, "Введите координату X!");
+        return false;
     }
-    if (Number(value) > 5) {
-        input.value = value.slice(0, selectionStart - 1) + value.slice(selectionStart);
-        input.setSelectionRange(selectionStart - 1, selectionStart - 1);
+    if (isNaN(x)) {
+        showMessage(error, "X должен быть числом!");
+        return false;
     }
-    if (Number(value) < -5) {
-        input.value = value.slice(0, selectionStart - 1) + value.slice(selectionStart);
-        input.setSelectionRange(selectionStart - 1, selectionStart - 1);
+    if (x < -3 || x > 3) {
+        showMessage(error, "Не входит в диапазон от -3 до 3!");
+        return false;
     }
+
+    const dot = xStr.indexOf('.');
+    if (dot !== -1 && xStr.length - dot - 1 > 6) {
+        showMessage(error, "Слишком много знаков после запятой (макс. 6)");
+        return false;
+    }
+    showMessage(error, "");
+    return true;
+}
+
+function normalizeNumber(value) {
+    if (!value) return '';
+
+    let v = value.trim()
+        .replace(/[^0-9.,-]/g, '')
+        .replace(/,/g, '.');
+    const dotIndex = v.indexOf('.');
+    if (dotIndex !== -1)
+        v = v.slice(0, dotIndex + 1) + v.slice(dotIndex + 1).replace(/\./g, '');
+
+    const minusCount = (v.match(/-/g) || []).length;
+    if (minusCount > 1 || (minusCount === 1 && v[0] !== '-'))
+        v = '-' + v.replace(/-/g, '');
+
+    return v;
 }
 
 document.getElementById("clear").addEventListener("click", () => {

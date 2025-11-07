@@ -16,7 +16,7 @@ public class HitResult implements Serializable {
     private long executionTime;
 
     public HitResult() {
-        this.currentTime = currentTime.now();
+        this.currentTime = LocalDateTime.now();
     }
 
     public HitResult(double x, double y, double r, boolean hit, LocalDateTime currentTime, long executionTime) {
