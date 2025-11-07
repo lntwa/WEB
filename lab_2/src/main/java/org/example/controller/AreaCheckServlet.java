@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.model.HitResult;
 import org.example.utilities.HitCheck;
+import org.example.utilities.Validation;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class AreaCheckServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType("text/html;charset=UTF-8");
-
+        Validation validation = new Validation();
         HitCheck hitCheck = new HitCheck();
         long startTime = System.nanoTime();
 
@@ -30,10 +31,15 @@ public class AreaCheckServlet extends HttpServlet {
             double y = Double.parseDouble(req.getParameter("y"));
             double r = Double.parseDouble(req.getParameter("r"));
 
+            if (!validation.validateXYR(x, y, r)) {
+                resp.getWriter().println("<h3>Значение не входит в диапазон!</h3>");
+                return;
+            }
+
             boolean hit = hitCheck.checkHit(x, y, r);
 
             long endTime = System.nanoTime();
-            long executionTime = (endTime - startTime) / 1_000_000; // в миллисекундах
+            long executionTime = (endTime - startTime) / 1_000_000;
             LocalDateTime currentTime = LocalDateTime.now();
 
             HitResult dot = new HitResult(x, y, r, hit, currentTime, executionTime);
