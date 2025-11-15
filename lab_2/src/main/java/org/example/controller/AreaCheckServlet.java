@@ -31,6 +31,10 @@ public class AreaCheckServlet extends HttpServlet {
             double y = Double.parseDouble(req.getParameter("y"));
             double r = Double.parseDouble(req.getParameter("r"));
 
+            x = Validation.roundTo6DecimalPlaces(x);
+            y = Validation.roundTo6DecimalPlaces(y);
+            r = Validation.roundTo6DecimalPlaces(r);
+
             if (!validation.validateXYR(x, y, r)) {
                 resp.getWriter().println("<h3>Значение не входит в диапазон!</h3>");
                 return;

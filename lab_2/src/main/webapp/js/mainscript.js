@@ -140,9 +140,13 @@ function normalizeNumber(value) {
     let v = value.trim()
         .replace(/[^0-9.,-]/g, '')
         .replace(/,/g, '.');
+
     const dotIndex = v.indexOf('.');
-    if (dotIndex !== -1)
+    if (dotIndex !== -1) {
         v = v.slice(0, dotIndex + 1) + v.slice(dotIndex + 1).replace(/\./g, '');
+        // Ограничиваем до 6 знаков после запятой
+        v = v.slice(0, dotIndex + 7);
+    }
 
     const minusCount = (v.match(/-/g) || []).length;
     if (minusCount > 1 || (minusCount === 1 && v[0] !== '-'))

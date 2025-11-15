@@ -21,4 +21,8 @@ public class Validation {
     public boolean validateXYR(double x, double y, double r) {
         return validateX(x) && validateY(y) && validateR(r);
     }
+
+    public static double roundTo6DecimalPlaces(double value) {
+        return Math.round(value * 1000000.0) / 1000000.0;
+    }
 }
