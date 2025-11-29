@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- === НАСТРОЙКИ ПОДКЛЮЧЕНИЯ (Ждем от преподавателя) === -->
+
+        <!-- Драйвер (для Oracle он такой) -->
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+
+        <!-- URL: Сюда вставите адрес.
+             Для локального Oracle это: jdbc:oracle:thin:@//localhost:1521/orcl
+             Для университетского (Helios) часто: jdbc:oracle:thin:@//helios.cs.ifmo.ru:1521/orcl -->
+        <property name="connection.url">jdbc:oracle:thin:@//localhost:1521/orcl</property>
+
+        <!-- Ваш логин -->
+        <property name="connection.username">ВАШ_ЛОГИН</property>
+
+        <!-- Ваш пароль -->
+        <property name="connection.password">ВАШ_ПАРОЛЬ</property>
+
+        <!-- === НАСТРОЙКИ HIBERNATE === -->
+
+        <!-- Диалект (важно для Oracle) -->
+        <property name="dialect">org.hibernate.dialect.OracleDialect</property>
+
+        <!-- Показывать SQL запросы в консоли (удобно для отладки) -->
+        <property name="show_sql">true</property>
+
+        <!-- update: создает таблицы, если их нет, но не удаляет данные -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Сюда впишите класс-сущность, когда создадите его -->
+        <!-- <mapping class="com.example.ResultEntity"/> -->
+
+    </session-factory>
+</hibernate-configuration>
