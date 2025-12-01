@@ -16,7 +16,7 @@ public class ResultsBean implements Serializable {
 
     private Double x = 0.0;
     private Double y = 0.0;
-    private Double r = 0.0;
+    private Double r = 2.0;
 
      private List<ResultEntity> results;
 
@@ -48,10 +48,10 @@ public class ResultsBean implements Serializable {
              try {
                  transaction = session.beginTransaction();
                  session.persist(result);
-                 transaction.commmit();
+                 transaction.commit();
              } catch (Exception e) {
                  if (transaction != null) {
-                     transaction.roolback();
+                     transaction.rollback();
                  }
                  e.printStackTrace();
              }

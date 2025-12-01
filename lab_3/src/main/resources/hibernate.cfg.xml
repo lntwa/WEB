@@ -4,35 +4,21 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <!-- === НАСТРОЙКИ ПОДКЛЮЧЕНИЯ (Ждем от преподавателя) === -->
 
-        <!-- Драйвер (для Oracle он такой) -->
-        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
 
-        <!-- URL: Сюда вставите адрес.
-             Для локального Oracle это: jdbc:oracle:thin:@//localhost:1521/orcl
-             Для университетского (Helios) часто: jdbc:oracle:thin:@//helios.cs.ifmo.ru:1521/orcl -->
-        <property name="connection.url">jdbc:oracle:thin:@//localhost:1521/orcl</property>
+        <property name="connection.url">jdbc:derby:/home/studs/s472157/lab_3;create=true</property>
 
-        <!-- Ваш логин -->
-        <property name="connection.username">ВАШ_ЛОГИН</property>
+        <property name="connection.username">student</property>
+        <property name="connection.password">helios</property>
 
-        <!-- Ваш пароль -->
-        <property name="connection.password">ВАШ_ПАРОЛЬ</property>
+        <property name="dialect">org.hibernate.dialect.DerbyDialect</property>
 
-        <!-- === НАСТРОЙКИ HIBERNATE === -->
-
-        <!-- Диалект (важно для Oracle) -->
-        <property name="dialect">org.hibernate.dialect.OracleDialect</property>
-
-        <!-- Показывать SQL запросы в консоли (удобно для отладки) -->
-        <property name="show_sql">true</property>
-
-        <!-- update: создает таблицы, если их нет, но не удаляет данные -->
         <property name="hbm2ddl.auto">update</property>
 
-        <!-- Сюда впишите класс-сущность, когда создадите его -->
-        <!-- <mapping class="com.example.ResultEntity"/> -->
+        <property name="show_sql">true</property>
+
+        <mapping class="org.example.lab_3.model.ResultEntity"/>
 
     </session-factory>
 </hibernate-configuration>

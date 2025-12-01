@@ -26,9 +26,10 @@ dependencies {
 
     implementation 'org.primefaces:primefaces:14.0.0:jakarta'
 
-    compileOnly 'org.hibernate.orm:hibernate-core:6.4.4.Final'
+    implementation 'org.apache.derby:derby:10.17.1.0'
+    implementation 'org.apache.derby:derbytools:10.17.1.0'
 
-    compileOnly 'org.slf4j:slf4j-api:2.0.9'
+    compileOnly 'org.hibernate.orm:hibernate-core:6.4.4.Final'
 }
 
 test {

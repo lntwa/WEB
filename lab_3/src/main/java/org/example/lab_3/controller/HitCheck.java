@@ -1,5 +1,5 @@
 package org.example.lab_3.controller;
-
+//исправить на новые значения варианта
 public class HitCheck {
     public static boolean checkHit(double x, double y, double r) {
         if ((x <= 0) && (y >= 0) && (y <= r) && (x >= -r/2)) {
