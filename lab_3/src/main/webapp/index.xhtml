@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Лабораторная работа №3 - Старт</title>
+    <h:outputStylesheet name="css/styles.css"/>
+
+    <style>
+        body {
+            background-image: url("#{resource['media/backimage.jpg']}");
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <header class="header_site">
+        <div class="container_header">
+            <a href="https://se.ifmo.ru/courses/web">
+                <h:graphicImage name="media/logo_itmo.png" alt="ITMO" style="height: 40px;"/>
+            </a>
+            <div class="initials">
+                <ul>
+                    <li>Леонтьева</li>
+                    <li>Арина</li>
+                    <li>Николаевна</li>
+                </ul>
+            </div>
+            <div class="group_isu">
+                <ul>
+                    <li>P3213</li>
+                    <li>472157</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div style="display: flex; flex-direction: column; align-items: center; margin-top: 100px;">
+
+        <div class="clock-container" style="text-align: center; background: rgba(3, 71, 66, 0.8); padding: 40px; border-radius: 15px; border: 3px solid antiquewhite; margin-bottom: 30px;">
+            <h:outputText value="Текущее время:" style="color: antiquewhite; font-size: 24px; display: block; margin-bottom: 10px;"/>
+
+            <span id="clock" style="color: white; font-size: 48px; font-weight: bold; font-family: monospace;">Загрузка...</span>
+            <br/>
+            <span id="date" style="color: antiquewhite; font-size: 20px;">&#160;</span>
+        </div>
+
+        <h:form>
+            <p:commandButton value="Перейти к основной странице"
+                             action="goToMain"
+                             style="font-size: 24px !important; padding: 10px 30px !important; border-radius: 10px;"/>
+        </h:form>
+
+    </div>
+
+    <script type="text/javascript">
+        function updateClock() {
+            const now = new Date();
+
+            const timeString = now.toLocaleTimeString();
+            const dateString = now.toLocaleDateString();
+
+            const clockEl = document.getElementById('clock');
+            const dateEl  = document.getElementById('date');
+
+            if (clockEl) clockEl.innerText = timeString;
+            if (dateEl)  dateEl.innerText  = dateString;
+        }
+
+        document.addEventListener("DOMContentLoaded", updateClock);
+
+        setInterval(updateClock, 7000);
+    </script>
+
+</h:body>
+</html>

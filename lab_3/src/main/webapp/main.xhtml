@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>Лабораторная работа №3</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body styleClass="background-image-page">
+    <header class="header_site">
+        <div class="container_header">
+            <a href="https://se.ifmo.ru/courses/web">
+                <h:graphicImage name="media/logo_itmo.png" alt="ITMO" style="height: 40px;"/>
+            </a>
+            <div class="initials">
+                <ul>
+                    <li>Леонтьева Арина</li>
+                    <li>P3213</li>
+                    <li>472157</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div id="check_container">
+
+        <h:form id="check_form">
+
+            <div class="form-group">
+                <label>X:</label>
+                <p:spinner id="xInput" value="#{resultsBean.x}"
+                           min="-5" max="5" stepFactor="1"
+                           converterMessage="X должен быть числом." />
+            </div>
+
+            <div class="form-group">
+                <label>Y:</label>
+                <h:inputText id="yInput" value="#{resultsBean.y}"
+                             required="true"
+                             requiredMessage="Y должен быть задан"
+                             validatorMessage="Y должен быть от -3 до 5"
+                             converterMessage="Y должен быть числом"
+                             maxlength="5">
+
+                    <f:validateDoubleRange minimum="-3.0" maximum="5.0" />
+                </h:inputText>
+                <h:message for="yInput" styleClass="error_message" id="y_input_msg" style="color:red" />
+            </div>
+
+            <div class="form-group">
+                <label>R:</label>
+                <h:inputText id="rInput" value="#{resultsBean.r}"
+                             required="true"
+                             requiredMessage="R должен быть задан"
+                             validatorMessage="R должен быть от 1 до 4"
+                             converterMessage="R должен быть числом"
+                             maxlength="5">
+
+                    <f:validateDoubleRange minimum="1.0" maximum="4.0" />
+                </h:inputText>
+                <h:message for="rInput" styleClass="error_message" id="r_input_msg" style="color:red" />
+            </div>
+
+            <div id="errorMessage" style="color: red; font-weight: bold; white-space: pre-line; display: none; margin-bottom: 10px;"></div>
+
+            <h:commandButton value="Проверить" action="#{resultsBean.addResult}"/>
+
+        </h:form>
+    </div>
+
+    <div class="graph">
+        <canvas id="areaGraph" width="450" height="450"></canvas>
+    </div>
+
+    <div id="table_container">
+        <h:dataTable id="resultsTable" value="#{resultsBean.results}" var="dot"
+                     styleClass="results-table"
+                     headerClass="table-header"
+                     rowClasses="table-row-odd,table-row-even">
+
+            <h:column>
+                <f:facet name="header">X</f:facet>
+                #{dot.x}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Y</f:facet>
+                #{dot.y}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">R</f:facet>
+                #{dot.r}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Результат</f:facet>
+                <span class="#{dot.hit ? 'status-hit' : 'status-miss'}">
+                #{dot.hit ? 'Попала' : 'Мимо'}
+            </span>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Время</f:facet>
+                #{dot.currentTime}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Скрипт (нс)</f:facet>
+                #{dot.executionTime}
+            </h:column>
+
+        </h:dataTable>
+    </div>
+
+    <div class="footer-container">
+        <h:form>
+            <h:commandButton value="Вернуться на стартовую" action="goToIndex"
+                             styleClass="button-secondary back-btn"/>
+        </h:form>
+    </div>
+
+    <script src="resources/js/graph.js"></script>
+    <script src="resources/js/graph-with-points.js"></script>
+    <script src="resources/js/graphclick.js"></script>
+    <script src="resources/js/js/validator.js"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeGraph(#{resultsBean.r});
+        });
+
+        function initializeGraph(currentR) {
+            var points = <h:outputText value="#{resultsBean.jsonData}" escape="false" />;
+
+            if (points.length > 0) {
+                drawAreaGraphWithPoints(currentR, points);
+            } else {
+                drawAreaGraph();
+            }
+        }
+    </script>
+
+</h:body>
+</html>
