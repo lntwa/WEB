@@ -1,51 +1,95 @@
-function redrawGraph() {
-    const rInput = document.getElementById('mainForm:r');
-    let currentR = 1.0;
+// Ждем загрузки страницы
+document.addEventListener("DOMContentLoaded", function () {
+    const canvas = document.getElementById("coordinate_plane");
 
-    if (rInput && rInput.value && rInput.value !== '0') {
-        currentR = parseFloat(rInput.value);
+    // Если канвас найден, вешаем обработчик клика
+    if (canvas) {
+        canvas.addEventListener("click", function (event) {
+            handleCanvasClick(canvas, event);
+        });
     }
+});
 
-    initCanvas(currentR);
+/**
+ * Обработка клика по графику
+ */
+function handleCanvasClick(canvas, event) {
+    // 1. Получаем текущий R
+    const r = getCurrentR();
 
-    window.savedPoints.forEach(point => {
-        let x = parseFloat(point.x);
-        let y = parseFloat(point.y);
-        drawPoint(x, y, point.hit);
-    });
-}
-
-window.redrawGraph = redrawGraph;
-document.addEventListener('DOMContentLoaded', redrawGraph);
-window.updateR = function (newRValue) {
-    redrawGraph();
-}
-window.handleCanvasClick = function (event) {
-    const rInput = document.getElementById('mainForm:r');
-    if (!rInput || rInput.value === '0') {
-        alert("Пожалуйста, выберите значение R перед кликом по графику");
+    // Если R некорректен, не отправляем запрос (хотя валидация есть на сервере)
+    // Можно добавить визуальное уведомление, но PrimeFaces и так покажет ошибку
+    if (!isValidR(r)) {
+        // Можно вызвать alert("Введите корректный R"), если хочется
         return;
     }
-    const canvas = event.target;
+
+    // 2. Вычисляем координаты
     const rect = canvas.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
     const clickY = event.clientY - rect.top;
-    const scale = 50;
-    const W = canvas.width;
-    const H = canvas.height;
-    const centerX = W / 2;
-    const centerY = H / 2;
-    const x = (clickX - centerX) / scale;
-    const y = (centerY - clickY) / scale;
 
-    const xInputHidden = document.getElementById('mainForm:x_input_hidden');
-    const yInputHidden = document.getElementById('mainForm:y_input_hidden');
-    const submitBtn = document.getElementById('mainForm:submit_button_canvas');
+    const width = canvas.width;
+    const height = canvas.height;
 
-    if (xInputHidden && yInputHidden && submitBtn) {
-        xInputHidden.value = x.toFixed(4);
-        yInputHidden.value = y.toFixed(4);
+    // Центр и масштаб берем из глобальных переменных canvas.js
+    // Если они там не объявлены как window.scale, используем хардкод 50
+    const currentScale = (typeof scale !== 'undefined') ? scale : 50;
+    const centerX = width / 2;
+    const centerY = height / 2;
 
-        submitBtn.click();
+    // Математика: (клик - центр) / масштаб
+    // Для Y инверсия: (центр - клик) / масштаб
+    let mathX = (clickX - centerX) / currentScale;
+    let mathY = (centerY - clickY) / currentScale;
+
+    // 3. Заполняем скрытую форму JSF
+    // ID элементов зависят от формы id="hiddenForm"
+    document.getElementById("hiddenForm:x_hidden").value = mathX.toFixed(3);
+    document.getElementById("hiddenForm:y_hidden").value = mathY.toFixed(3);
+    document.getElementById("hiddenForm:r_hidden").value = r;
+
+    // 4. Нажимаем скрытую кнопку, чтобы отправить AJAX запрос
+    document.getElementById("hiddenForm:submit_hidden").click();
+}
+
+/**
+ * Глобальная функция перерисовки.
+ * Вызывается из main.xhtml (атрибуты onload, oncomplete, onchange)
+ */
+function drawCanvas() {
+    let r = getCurrentR();
+
+    // getPoints() генерируется в main.xhtml и возвращает массив объектов
+    // Если функция еще не определена (например, при первой загрузке), берем пустой массив
+    let points = (typeof getPoints === "function") ? getPoints() : [];
+
+    // Вызываем функцию отрисовки из canvas.js
+    if (typeof renderGraph === "function") {
+        renderGraph(r, points);
     }
+}
+
+/**
+ * Вспомогательная функция для получения R из поля ввода
+ */
+function getCurrentR() {
+    // Ищем поле ввода PrimeFaces. ID = id_формы:id_компонента
+    let rInput = document.getElementById('mainForm:r');
+
+    if (rInput) {
+        // Заменяем запятую на точку и парсим
+        let val = parseFloat(rInput.value.replace(',', '.'));
+        if (isValidR(val)) {
+            return val;
+        }
+    }
+    return 1.0; // Дефолтное значение для отрисовки, если R не введен
+}
+
+/**
+ * Проверка R (соответствует валидации на сервере)
+ */
+function isValidR(val) {
+    return !isNaN(val) && val >= 1 && val <= 4;
 }
