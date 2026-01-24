@@ -35,9 +35,6 @@ public class ResultDB {
     @Column(name = "current_time")
     private LocalDateTime currentTime;
 
-    @Column(name = "execution_time")
-    private Long executionTime;
-
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private UserDB owner;
