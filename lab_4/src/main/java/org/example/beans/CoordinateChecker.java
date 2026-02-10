@@ -2,7 +2,7 @@ package org.example.beans;
 
 import org.example.models.Coordinates;
 
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 import java.math.BigDecimal;
 
 @Stateless

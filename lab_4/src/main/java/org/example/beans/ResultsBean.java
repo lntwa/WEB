@@ -6,9 +6,9 @@ import org.example.DBmodels.UserDB;
 import org.example.models.CheckResponse;
 import org.example.models.Coordinates;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.*;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.*;
 
 import org.example.models.Result;
 import org.example.rest.authFilter.UserPrincipal;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Stateless
 public class ResultsBean {
 
-    @PersistenceContext(unitName = "persistence-unit")
+    @PersistenceContext(unitName = "studs")
     private EntityManager entityManager;
 
     @EJB
@@ -44,7 +44,7 @@ public class ResultsBean {
                     .y(coordinates.getY())
                     .r(coordinates.getR())
                     .hit(success)
-                    .currentTime(LocalDateTime.now())
+                    .executionTime(LocalDateTime.now())
                     .owner(user)
                     .build();
 
@@ -63,7 +63,7 @@ public class ResultsBean {
             UserDB user = (UserDB) namedQuery.getSingleResult();
 
             return user.getResults().stream()
-                    .sorted(Comparator.comparing(ResultDB::getCurrentTime))
+                    .sorted(Comparator.comparing(ResultDB::getExecutionTime))
                     .map(ResultsBean::transformToResult)
                     .collect(Collectors.toList());
         } catch (PersistenceException exception) {
@@ -95,7 +95,7 @@ public class ResultsBean {
                 String.valueOf(db.getY()),
                 String.valueOf(db.getR()),
                 db.getHit(),
-                db.getCurrentTime().toString()
+                db.getExecutionTime().toString()
         );
     }
 }
